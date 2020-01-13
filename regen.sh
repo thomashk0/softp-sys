@@ -4,12 +4,11 @@ set -eu -o pipefail
 
 out="src/bindings.rs"
 
-echo "Generating fst API bindings -> $out"
-bindgen softfp/softfp.h -o ${out}
-
-# bindgen fstapi/fstapi.h \
-#   --whitelist-function "fstWriter.*" \
-#   --whitelist-function "fstReader.*" \
-#   --whitelist-type "fst.*" \
-#   --opaque-type "FILE" \
-#   -o ${out}
+echo "Generating API bindings -> $out"
+bindgen softfp/softfp.h \
+    --whitelist-type "sfloat.*" \
+    --whitelist-type "RoundingModeEnum"\
+    --whitelist-function "cvt_.*" \
+    --whitelist-function ".*_sf32" \
+    --whitelist-function ".*_sf64" \
+    -o ${out}
